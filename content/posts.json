@@ -1,0 +1,59 @@
+{
+  "site": {
+    "title": "Less Clueless",
+    "tagline": "Engineering, products, and the thinking behind building things well.",
+    "author": "Ankur Goel",
+    "url": "https://lessclueless.me",
+    "email": "ankur@chaotix.ai",
+    "intro": "I'm Ankur Goel. I build, ship, and write down what I learn along the way. Some of it tactical, some of it personal experiments.",
+    "socials": [
+      { "label": "Email", "href": "mailto:ankur@chaotix.ai" },
+      { "label": "X", "href": "https://x.com/goelankur1996" },
+      { "label": "LinkedIn", "href": "https://www.linkedin.com/in/goelankur1996/" },
+      { "label": "Substack", "href": "https://lessclueless.substack.com/" }
+    ],
+    "footer_note": "I am brewing a few experiments. I might do some interesting things soon."
+  },
+  "posts": [
+    {
+      "slug": "shipping-hobbyist-robotics-kit",
+      "title": "How to ship a \u201chobbyist\u201d robotics kit?",
+      "description": "Four gotchas from assembling an SO-101 kit, and what shipping good open-source hardware actually requires from vendors and buyers.",
+      "date": "2026-06-24",
+      "tags": ["robotics", "hardware"],
+      "source": "How to ship a \u201chobbyist\u201d robotics kit 3871a8190217804aa0e5dece2766bfab.html"
+    },
+    {
+      "slug": "pi07-bad-data-good-things",
+      "title": "Pi0.7: utilizing bad data to teach good things",
+      "description": "How \u03c00.7 turns failures and low-quality demos into training signal by labelling them honestly, and whether that's a lasting paradigm or a stopgap solution.",
+      "date": "2026-06-18",
+      "tags": ["robotics", "ml"],
+      "source": "Pi0 7 utilizing bad data to teach good things 37c1a819021780f9a6dbc1e0fe8c638a.html"
+    },
+    {
+      "slug": "ai-hallucinates-robotics-sim",
+      "title": "When AI hallucinates what it sees: notes from a robotics sim",
+      "description": "Three times Claude was confidently wrong about what it was seeing in a robotics sim, and what that means for AI moving into the physical world.",
+      "date": "2026-06-10",
+      "tags": ["ai", "robotics"],
+      "source": "When AI hallucinates what it sees notes from a rob 3711a819021780a0ad86c2a9c354989e.html"
+    },
+    {
+      "slug": "personal-automation-system",
+      "title": "Building a personal automation system on the graveyard of past attempts",
+      "description": "Building a personal automation system: a journaling and cataloguing loop on Notion, Telegram, and Claude.",
+      "date": "2026-05-28",
+      "tags": ["productivity", "automation"],
+      "source": "Building a personal automation system on the grave 36c1a819021780f4b751edc7a6c9e60d.html"
+    },
+    {
+      "slug": "design-launches-doing-it-right",
+      "title": "Design, Launches and Doing it right",
+      "description": "Lessons from two years building Chaotix: why design is trust, why shipping isn't launching, and a tactical framework for small teams.",
+      "date": "2026-05-15",
+      "tags": ["design", "product"],
+      "source": "Design, Launches and Doing it right 36d1a81902178167b9bddf0991ad18bc.html"
+    }
+  ]
+}

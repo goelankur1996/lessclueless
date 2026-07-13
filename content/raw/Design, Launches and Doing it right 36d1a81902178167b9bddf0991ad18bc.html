@@ -1,0 +1,767 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Design, Launches and Doing it right</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure,
+aside,
+details {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="36d1a819-0217-8167-b9bd-df0991ad18bc" class="page sans"><header><h1 class="page-title" dir="auto">Design, Launches and Doing it right</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><h1 id="36d1a819-0217-8168-acfa-f2b31a440d42" class="" dir="auto">Design, Launches and Doing it right</h1><h1 id="36d1a819-0217-818e-8645-ed7f36315163" class="" dir="auto">Reflections from Chaotix journey</h1><p id="36d1a819-0217-8175-a46d-c8bdf0605f56" class="" dir="auto">I spent two years building Chaotix before deciding to shut it down a few weeks back. Over that time we raised a round, built a team, and grew to 20,000 users who created more than 30,000 games.</p><p id="36d1a819-0217-812f-aadd-d52e05fd0af2" class="" dir="auto">A dear friend advised to take a step back and take stock of learnings from this experience. So, I spoke to some of our power users again to understand what they liked and didn’t like. While a majority of them loved our team and our product, what surprised me was that several of them didn’t even know about features we had already shipped.</p><p id="36d1a819-0217-8195-8f9b-d46f0162d642" class="" dir="auto">That moment forced me to rethink a lot of assumptions about how consumer products actually grow. Looking back, a lot of the things we struggled with were not purely technical problems. They were product judgment problems. Over time a few patterns started to become obvious.</p><p id="36d1a819-0217-8146-9439-f12e516f7cdc" class="" dir="auto">These are some of the key lessons and usable frameworks I took away from building Chaotix.</p><h2 id="36d1a819-0217-81ef-b3f5-c30dd636cce5" class="" dir="auto">Part 1: Lessons from building Chaotix</h2><p id="36d1a819-0217-8103-9531-eee36598471b" class="" dir="auto">These are some of the key learnings I have acquired:</p><ol type="1" id="36d1a819-0217-8152-a0fa-f743d5419722" class="numbered-list" start="1" dir="auto"><li>Design is trust infrastructure</li></ol><ol type="1" id="36d1a819-0217-810c-80c1-f622681978dc" class="numbered-list" start="2" dir="auto"><li>Speed matters, but quality becomes paramount once the product begins to matter</li></ol><ol type="1" id="36d1a819-0217-8196-acd8-d79f285848b3" class="numbered-list" start="3" dir="auto"><li>For AI products, the first output matters far more than most builders expect</li></ol><ol type="1" id="36d1a819-0217-8134-a4de-c950bb752c2c" class="numbered-list" start="4" dir="auto"><li>Shipping ≠ launching</li></ol><ol type="1" id="36d1a819-0217-819c-848a-d4c0aa40d161" class="numbered-list" start="5" dir="auto"><li>Product and communication must be a single loop</li></ol><h3 id="36d1a819-0217-81b9-98bc-f9904237133b" class="" dir="auto">1. Design is trust infrastructure</h3><p id="36d1a819-0217-813a-aae9-db57be4be2c0" class="" dir="auto">Gen Z and Gen Alpha have grown up with internet abundance. They have seen hundreds of consumer products and developed a strong sense of taste. They use design judgement to filter out spam from good products.</p><p id="36d1a819-0217-813e-b26e-e24bc6486b01" class="" dir="auto">A high quality user interface is therefore not a luxury. It is a prerequisite for trust and engagement.</p><p id="36d1a819-0217-81b8-aa81-e4903c96b795" class="" dir="auto">For Indian founders, two forces make this worse.</p><p id="36d1a819-0217-81fd-823d-c7d963a8ac57" class="" dir="auto">First, the consumer design standards in India have historically been low. Partly because ARPU is lower, and partly because there are fewer globally successful consumer product companies coming from the ecosystem. This has created a feedback loop: fewer world-class products leading to fewer world-class designers and that, in turn, leading to few world-class products.</p><p id="36d1a819-0217-8115-aec4-ccbd322537f4" class="" dir="auto">Second, we often have an incorrect understanding of how important speed is and at what cost.</p><h3 id="36d1a819-0217-81af-b675-d5bb7cd71c49" class="" dir="auto">2. Speed matters, but quality becomes paramount once the product begins to matter</h3><p id="36d1a819-0217-8158-bb90-e38c3d45a832" class="" dir="auto">Speed always matters, but there are moments when it matters more than anything else and moments when it doesn’t. It’s a crucial skill to learn and implement this in a startup team.</p><p id="36d1a819-0217-81ff-bba5-d23d8016cdbb" class="" dir="auto">We launched fast while we were in the proof of concept phase. An engineered platform got a few hundred users excited about a product AND helped us raise a seed round. For that purpose, leaning completely on speed without caring about design was a great approach. But once we had the right partners funding our vision, we should have instantly thought about the complete product where quality should have become paramount instead of speed.</p><p id="36d1a819-0217-8166-aa9a-fb775952ad76" class="" dir="auto">Quality comes from:</p><ol type="1" id="36d1a819-0217-8137-abc5-d60e80d0c3e4" class="numbered-list" start="1" dir="auto"><li>Good design</li></ol><ol type="1" id="36d1a819-0217-81d0-9eb5-dad6fe8c2bc6" class="numbered-list" start="2" dir="auto"><li>Honest and diligent implementation of the good design</li></ol><ol type="1" id="36d1a819-0217-81bb-997c-daf7b92a896e" class="numbered-list" start="3" dir="auto"><li><em>Especially for AI products, great first time answer</em></li></ol><h3 id="36d1a819-0217-81b1-a614-f5c4822eb7bc" class="" dir="auto">3. For AI products, the first output matters far more than most builders expect</h3><p id="36d1a819-0217-818c-afab-dd441cab25a7" class="" dir="auto">This is something that came up in a few conversations while we were building Chaotix. It was difficult to fully appreciate this while we were building the product. For someone used to traditional design processes, this feels counterintuitive.</p><p id="36d1a819-0217-8126-9a86-cdb14ecfe801" class="" dir="auto">If you’re planning to build an AI company, the first time output/answer is more important than you know.</p><p id="36d1a819-0217-81c5-9b5d-fa20d825d55d" class="" dir="auto">The two ways we found how to reduce the churn from first time answer were:</p><ol type="1" id="36d1a819-0217-8133-864e-cd2c191a0938" class="numbered-list" start="1" dir="auto"><li><strong>Set the right expectation before the users write their first prompt:</strong><p id="36d1a819-0217-8106-a21b-f8f9ec2517a8" class="" dir="auto">When we created a REMIX feature in Chaotix that allowed users to see the game template that they will modify with this prompt and then they got that modified template game, the SHARE count went up.</p></li></ol><ol type="1" id="36d1a819-0217-8107-b74b-cdf7b1a0350a" class="numbered-list" start="2" dir="auto"><li><strong>Deliver more than promised:</strong><p id="36d1a819-0217-810d-ab82-fe71614ed1a1" class="" dir="auto">This is an anecdote from a different company. It is an AI video creation plus editing tool. The initial idea was to show the users a step-by-step process to make a great video. The conversions were close to zero, and when they removed the steps and gave the one-shot output that was more colorful instead of a storyboard, the conversions instantly shot high.</p></li></ol><p id="36d1a819-0217-81a3-9bbc-e8446f84edbf" class="" dir="auto">Think from a user journey standpoint and solve for the first time answer as early as possible. Remember, for AI products, the first output matters more than you think.</p><p id="36d1a819-0217-81c4-8c81-ef8bb86c077f" class="" dir="auto">But no matter what you build, it’s useless if the potential users aren’t seeing it immediately.</p><h3 id="36d1a819-0217-812a-8491-f1c5e602946a" class="" dir="auto">4. Shipping ≠ launching</h3><p id="36d1a819-0217-81e7-99e9-c21a51df1945" class="" dir="auto">A few days after we stopped developing the Chaotix app any further, I spoke to a few of the power users and took stock of what they liked and did not like in Chaotix. It is a painful thing to find out in hindsight that quite a few users, that we considered power users and our spokesperson, did NOT even know about multiple features that we had shipped.</p><p id="36d1a819-0217-81bd-bf14-e98e2077d9f4" class="" dir="auto">However, this inspired a simple query, for every feature we built and shipped, how many pieces of content did we make? And the ratio was something close to 1:3. I am including all the promotional contents, ads creative and posts that were made. This means that some of the features got ZERO push from our end. They didn’t make it into a newsletter, a video or even a linkedin/twitter post.</p><p id="36d1a819-0217-81c5-9090-e79630b8be9f" class="" dir="auto">I will never make this mistake again. Shipping is NOT launching.</p><p id="36d1a819-0217-8183-887b-e9b95b2088a2" class="" dir="auto">For startups, you launch every week. Yes. True.</p><p id="36d1a819-0217-81cc-83b0-e5065e5a3acc" class="" dir="auto">But launching every week is not just shipping every week.</p><p id="36d1a819-0217-8161-8340-e189ae3eb3db" class="" dir="auto">But the definition of launch must be that you have made every effort to inform your current users and your prospective users about the things that you’re shipping.</p><p id="36d1a819-0217-8121-a5df-d336381fce47" class="" dir="auto">I’ll lean on the side of “ship once, sing a hundred times”. I would even go to the length of building less OR stop shipping new things altogether, if you’ve not yet done the launches properly for the things built so far.</p><p id="36d1a819-0217-81e8-984b-fd8db65869f2" class="" dir="auto">This only happens when product plus communication is a single loop instead of disjointed responsibilities.</p><h3 id="36d1a819-0217-818c-b378-daf8716efe14" class="" dir="auto">5. Product + communication needs to be one loop</h3><p id="36d1a819-0217-816e-b4c0-c791d8bd872a" class="" dir="auto">This is almost a consequence of following “shipping is not launching” rule carefully. If you’re committed to launch everything you build and ship. You will want to take a step back before building to see if you can actually launch it.</p><p id="36d1a819-0217-813a-911d-f66fb3e62950" class="" dir="auto">It’s almost as simple as asking can you explain what you’re building to your core audience comfortably before you go ahead and start building it.</p><p id="36d1a819-0217-81db-b3e0-da5a9a59c248" class="" dir="auto">In Chaotix, we built a feature card “AVATAR CARD” while it sounded cool and we felt excited about it. We were never fully able to explain to the users what it was supposed to do for them.</p><p id="36d1a819-0217-8140-b3a2-c32de635e43c" class="" dir="auto">There are some more examples of features built, shipped and then deleted from Chaotix which went through the cycles of us struggling to explain it after we’d built it.</p><p id="36d1a819-0217-81d4-81a9-ec00da059745" class="" dir="auto">The objective of that feature was to give a glimpse of the character that the user will be playing as in every game and a moment for them to experience it.</p><p id="36d1a819-0217-8196-b86d-d4ffbfaebabd" class="" dir="auto">If I were to do it again, I’d have kept simple “PROFILE PICTURE” where we placed “AVATAR CARD” and instead of “AVATAR CARD”, I’d have built a simple interactive experience like “TEST YOUR CHARACTER” where could make a character and test out how it looks while moving around.</p><p id="36d1a819-0217-819e-9b47-cc59c69eda87" class="" dir="auto">The simplest way to solve the product and communication gap is to try and communicate the product before you build it.</p><p id="36d1a819-0217-814f-b257-d23dec7a7f77" class="" dir="auto">If you cannot communicate it simply, maybe wait out a couple of days/weeks. Maybe you’ll decide not to ship it at all or, at the very least, you’d find a better form of that feature that is easier to get through to the user.</p><p id="36d1a819-0217-81bb-8989-cb52093992a4" class="" dir="auto">While these are some of the key learnings, I find them incomplete without a simple to list or a framework on how to execute them well. If I were to start a company today, this is the framework I would use.</p><h2 id="36d1a819-0217-81a1-9c44-c4137d2c0518" class="" dir="auto">Part 2: Framework for starting up with a small team</h2><p id="36d1a819-0217-8182-a530-cf7cbe8bbc61" class="" dir="auto">This will be my tactical framework for a small team. Let’s break it down into three parts:</p><ol type="1" id="36d1a819-0217-8144-8875-fcd248858e53" class="numbered-list" start="1" dir="auto"><li>Before you begin</li></ol><ol type="1" id="36d1a819-0217-81dc-a3d3-cf652f268daf" class="numbered-list" start="2" dir="auto"><li>Product</li></ol><ol type="1" id="36d1a819-0217-8197-8751-f104a7fa88cf" class="numbered-list" start="3" dir="auto"><li>Communications</li></ol><h3 id="36d1a819-0217-8104-b511-fc8f00820ab2" class="" dir="auto">Before you begin:</h3><p id="36d1a819-0217-815f-ab97-cb2e6efde789" class="" dir="auto">Before you begin building anything or even decide on an idea, find a few key users. They’re going to be your pseudo-bosses.</p><p id="36d1a819-0217-81b5-910e-e8a5fe8a007a" class="" dir="auto">If you cannot find multiple, at least find one person whose interests you seek to serve through building a company.</p><p id="36d1a819-0217-8186-a908-db7c764f29ed" class="" dir="auto">You want to have a specific set of people in mind who you’re solving for instead of a vague persona.</p><p id="36d1a819-0217-81db-9a00-d9e8ca74415c" class="" dir="auto">Unless you have at least one specific person in mind, do not start a company.</p><p id="36d1a819-0217-818b-9df1-dafaebf8f8c2" class="" dir="auto">It sounds extremely simple, but it’s a step many people often overlook.</p><p id="36d1a819-0217-8135-ad77-d29060fe8630" class="" dir="auto">We were fortunate enough to do it right in Chaotix as well. And this used to help a lot.</p><h3 id="36d1a819-0217-8135-aef2-eea6a021818d" class="" dir="auto">Product:</h3><p id="36d1a819-0217-8129-8c6c-fa22872eb99c" class="" dir="auto">This is a good framework for running product meetings. Note that this will typically end up being a long meeting often running over 3 hours. But this should be the ONLY product meeting you have in one cycle. For us that frequency was once a week.</p><ol type="1" id="36d1a819-0217-8152-9b24-c79add594bab" class="numbered-list" start="1" dir="auto"><li>Gather pertinent data. Data means:<ol type="a" id="36d1a819-0217-8132-94a8-e119e32f4be8" class="numbered-list" start="1" dir="auto"><li>Status of the north star metric like revenue or DAU</li></ol><ol type="a" id="36d1a819-0217-819d-85a0-e6bc2fe8b1a6" class="numbered-list" start="2" dir="auto"><li>Status of contributing metrics. For Chaotix, it used to be active creators, content created, active players, share counts etc.</li></ol><ol type="a" id="36d1a819-0217-81f1-a097-fbc01d01f40a" class="numbered-list" start="3" dir="auto"><li>Usage numbers on the features launched a week ago</li></ol></li></ol><ol type="1" id="36d1a819-0217-81e7-86c0-f3cd86530f44" class="numbered-list" start="2" dir="auto"><li>Get all ideas on the board. </li></ol><ol type="1" id="36d1a819-0217-80c0-bef8-d249780d2ee7" class="numbered-list" start="3" dir="auto"><li>Categorize the ideas into:<ol type="a" id="36d1a819-0217-8151-a105-d7c04c005b8b" class="numbered-list" start="1" dir="auto"><li>Bug fixes</li></ol><ol type="a" id="36d1a819-0217-81da-91fc-fe173fdbaa01" class="numbered-list" start="2" dir="auto"><li>Feature deletion requests</li></ol><ol type="a" id="36d1a819-0217-81c3-8d47-dc9fe82093c0" class="numbered-list" start="3" dir="auto"><li>Feature recommendations</li></ol></li></ol><ol type="1" id="36d1a819-0217-81ba-aa4d-f1f5b6d33480" class="numbered-list" start="4" dir="auto"><li>Bug fixes take priority. What’s out, should be high quality.</li></ol><ol type="1" id="36d1a819-0217-8118-be72-d8ab37b2de48" class="numbered-list" start="5" dir="auto"><li>Feature deletion requests are an important category to keep on the board. It’s great if this is empty every week. That’s ideal. But having this category creates room for everyone comfortably acknowledging that we may have made wrong choices and that it’s our responsibility to fix them moving forward.</li></ol><ol type="1" id="36d1a819-0217-811a-b49b-e486118eedf5" class="numbered-list" start="6" dir="auto"><li>For feature recommendations, you want to define how it will move the north star metric. For example, adding a “FRIEND SUGGESTION” increases the FRIEND REQUEST SENT and creates more reasons for creators and players to interact with the app. This leads to increased DAU.</li></ol><ol type="1" id="36d1a819-0217-8122-b4eb-e78080b1f228" class="numbered-list" start="7" dir="auto"><li>You want to further categorize, how difficult will it be to build that feature. Typically, you want to keep it simple in the form of dev days. We had the categorized them as easy, medium, or hard feature if they took less than one dev day, 1-2 dev days, or &gt;4 dev days respectively.</li></ol><ol type="1" id="36d1a819-0217-8165-b9f4-cb61a8c5ad52" class="numbered-list" start="8" dir="auto"><li>Try explaining each feature as simply as possible. For this step, the key responsible person for marketing in your team, must be present in the meeting. Make sure you have 1-2 sentence long clear marketing friendly explanations of that feature. Unless you have it, consider shelving that feature for a week or two and revisit it next week. Do NOT build it, unless you can see a clear exciting path to share it with users.</li></ol><ol type="1" id="36d1a819-0217-8122-aab6-c548e6477cb0" class="numbered-list" start="9" dir="auto"><li>Decide clear written spec. Not just that, throw it into Figma make and get close to 90% of the design of what you want to make. This is NOW possible and it works great! This removes uncertainty from the process and adds transparency.</li></ol><ol type="1" id="36d1a819-0217-8163-8896-d335fb1c4775" class="numbered-list numbered-list-digits-2" start="10" dir="auto"><li>Clearly allocate the tasks to specific individuals along with the timelines and expected deliverables including the written spec and the Figma design.</li></ol><ol type="1" id="36d1a819-0217-814c-8279-e62ef565465c" class="numbered-list numbered-list-digits-2" start="11" dir="auto"><li>This is an add on that can be done during or after the meeting which is to prepare a summary for the pseudo-bosses. This summary should contain, usage numbers on the features launched a week ago, status of features launched last week and details of features planned for launch this week.</li></ol><p id="36d1a819-0217-81f9-b1ed-fa7836cf1e4d" class="" dir="auto">Note: Michael Seibel, from YCombinator, has a <a href="https://www.youtube.com/watch?v=C27RVio2rOs&amp;t=2663s">great video</a> on building products. My framework is made with tweaks on his.</p><h3 id="36d1a819-0217-81ce-b0c9-ce3f67876917" class="" dir="auto">Communications:</h3><p id="36d1a819-0217-8190-a2a0-f7d78a5c2fdf" class="" dir="auto">This is the framework that I believe that we can implement in the early stage teams. This is NOT fully tested yet but I feel confident that this is an implementable framework with significant benefits for a small team.</p><p id="36d1a819-0217-8138-90c6-c32908e28ad6" class="" dir="auto">Note that this is not a framework around how to build marketing and distribution.</p><p id="36d1a819-0217-81b9-90c1-c0f3b4f89400" class="" dir="auto">This framework assumes that you already have a few users and a few prospective users i.e. top of the funnel.</p><p id="36d1a819-0217-81e8-aeda-ec4a1c77ba23" class="" dir="auto">This is about a basic plan for communicating with your top of the funnel. This funnel consists of your mailing lists, your followers on social media and relevant communities.</p><p id="36d1a819-0217-819d-82fe-d77cc0aa5332" class="" dir="auto">Note that you need to do a lot of extra work to constantly increase your top of the funnel.</p><p id="36d1a819-0217-8114-b1a6-ff097b7f6f11" class="" dir="auto">You want to run a communications meeting immediately after the product meeting.</p><p id="36d1a819-0217-81a2-bd3c-c9fe3c6be4a7" class="" dir="auto">For small teams, barring anyone who is exclusively only an engineer, you should include everyone who posts content or handles any community channels in this meeting.</p><p id="36d1a819-0217-8107-99e9-d35e0253df24" class="" dir="auto">The summary document that you prep for your pseudo-boss in the product meeting becomes the ground work for this meeting.</p><ol type="1" id="36d1a819-0217-81a3-8d2a-d74129347c6c" class="numbered-list" start="1" dir="auto"><li>Gather all data. Data means:<ol type="a" id="36d1a819-0217-8190-89e4-c520ae980b18" class="numbered-list" start="1" dir="auto"><li>Data gathered for the product meeting</li></ol><ol type="a" id="36d1a819-0217-81fa-9809-f32085b197f1" class="numbered-list" start="2" dir="auto"><li>The note you prepare for your pseudo-bosses</li></ol></li></ol><ol type="1" id="36d1a819-0217-814e-b19d-d2f608b93eb4" class="numbered-list" start="2" dir="auto"><li>Every feature must be mentioned in every funnel at least 3 times. I.e. say you enabled reacting to comments in your product. Then you must mention in at least 3 emails, 3 posts/reels on social including TikTok, Insta, Twitter etc. and mention it in at least 3 reddit communities.</li></ol><ol type="1" id="36d1a819-0217-81f6-84d9-d09276f5ee8d" class="numbered-list" start="3" dir="auto"><li>These are the three easy category of contents that you can build:<ul id="36d1a819-0217-81b1-b5ad-c1036d4046e1" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Teaser:</strong> You can make this content directly when you come out of the product meeting. This announces to the users what you’re planning to build this week. This can even include screenshots of Figma, your thought process on why you think it’s relevant, the user story that triggered this feature, or what you think it will change in the users’ lives. To create this content, the marketeer will have to step into the users’ shoes again and it will likely also help with figuring out any gaps remaining in building the feature.</li></ul><ul id="36d1a819-0217-81dc-a986-d90459a361af" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Launch:</strong> This is where you want to inform the users and prospective users about what you’ve built and shipped. Don’t worry about this being on the exact same day as the feature is shipped. All you want to ensure is that it goes out in the same week as the feature is launched.</li></ul><ul id="36d1a819-0217-8112-bc5d-e1de815d6321" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Results:</strong> This is the results of the feature. It can be something as simple as the stats about the feature use or a user story that emerged from this feature use. This goes out a few days after the feature has been live. This helps making sure that a feature doesn’t go into a feature deletion request bucket just because it wasn’t utilized quickly.</li></ul></li></ol><ol type="1" id="36d1a819-0217-81bc-90e9-ddfc8852dc03" class="numbered-list" start="4" dir="auto"><li>These are the funnels that I would easily utilize:<ul id="36d1a819-0217-8114-a933-c0d1fb605b08" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Mailing lists</strong><p id="36d1a819-0217-81ee-8bef-c3fdf2db12ed" class="" dir="auto">Without spamming the users, I would want to send a weekly update email/newsletter to the users and prospective users.</p><p id="36d1a819-0217-8117-8dad-cb5020d1d677" class="" dir="auto">One mail would contain all three.</p><p id="36d1a819-0217-813c-840b-f054c25d2ea1" class="" dir="auto">The teaser of features to be launched coming week, the launch info of features launched this week, and the results of features launched the week prior.</p></li></ul><ul id="36d1a819-0217-81fd-8db5-edd5715c6061" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Social media videos</strong><p id="36d1a819-0217-81b3-b204-d639cebf218f" class="" dir="auto">Videos is the format that masses are consuming especially short form videos.</p><p id="36d1a819-0217-8186-8cb9-e5a875947af7" class="" dir="auto">Here you have much more liberty to create interesting content ranging from demos, sketches, to talking head videos.</p><p id="36d1a819-0217-813f-afc5-f7fc60d2d4f6" class="" dir="auto">The teaser, launch and result is a good starting point for this but be creative here.</p></li></ul><ul id="36d1a819-0217-811d-beac-ebcd19cdd786" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Community</strong><p id="36d1a819-0217-8155-82bd-ef768bcdb22d" class="" dir="auto">You should build a 2 way community on Discord and Insta.</p><p id="36d1a819-0217-810c-bac5-f27ce1a6eaeb" class="" dir="auto">But even if that doesn’t yet meaningfully exist, you want to identify the right topics on Twitter and Reddit and post some things about your content in similar lines of teaser, launch and result.</p></li></ul></li></ol><ol type="1" id="36d1a819-0217-8161-97f0-cba83b518885" class="numbered-list" start="5" dir="auto"><li>Only once you know that all 3 category of content has been created and shared on all three types of channels you know should consider that a feature is launched. Remember <strong>shipping ≠ launching</strong>.</li></ol><p id="36d1a819-0217-81f1-b592-d19a8a394724" class="" dir="auto">On the surface, this may seem excessive. Especially to a first-time founder. But it isn’t. It is the absolute bare minimum.</p><p id="36d1a819-0217-81d0-8e69-d44da9f5a498" class="" dir="auto">In a world where building software is getting easier every year, the scarce resource is attention. If you build something useful, it is your responsibility to make sure people know it exists.</p><p id="36d1a819-0217-8135-a364-d238acc00f4b" class="" dir="auto">Build once. Sing a hundred times.</p><hr id="36d1a819-0217-811c-a736-f91b62ab1883" dir="auto"/><p id="36d1a819-0217-8121-81da-f2f046abeb2f" class="" dir="auto">— Ankur Goel</p><p id="36d1a819-0217-8173-80d3-f47f4edeb4b0" class="" dir="auto"><em>I am brewing a few experiments. I might do some interesting things soon. You can reach me at:</em></p><ul id="36d1a819-0217-81ee-91ec-e0ffc92103b6" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="mailto:ankur@chaotix.ai">ankur@chaotix.ai</a></li></ul><ul id="36d1a819-0217-8182-bddc-fff3b2c67996" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://x.com/goelankur1996">https://x.com/goelankur1996</a></li></ul><ul id="36d1a819-0217-8107-a003-dbff026b63da" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://www.linkedin.com/in/goelankur1996/">https://www.linkedin.com/in/goelankur1996/</a></li></ul><p id="36d1a819-0217-805a-84c8-e09901271627" class="" dir="auto">You can check out another blog I wrote at: </p><p id="118e53e6-56ba-495d-832b-2437acb46717" class="" dir="auto"><a href="Pi0%207%20utilizing%20bad%20data%20to%20teach%20good%20things%2037c1a819021780f9a6dbc1e0fe8c638a.html" data-notion-page-id="37c1a819-0217-80f9-a6db-c1e0fe8c638a" data-notion-space-id="b361a819-0217-814e-9751-00031293d165">Pi0.7: utilizing bad data to teach good things</a> </p><p id="36d1a819-0217-8015-b21a-c541f3edb176" class="" dir="auto"><a href="Building%20a%20personal%20automation%20system%20on%20the%20grave%2036c1a819021780f4b751edc7a6c9e60d.html" data-notion-page-id="36c1a819-0217-80f4-b751-edc7a6c9e60d" data-notion-space-id="b361a819-0217-814e-9751-00031293d165">Building a personal automation system on the graveyard of past attempts</a> </p><p id="9fe3c6cc-cb9e-4cec-a7a5-f1923e86296d" class="" dir="auto"><a href="When%20AI%20hallucinates%20what%20it%20sees%20notes%20from%20a%20rob%203711a819021780a0ad86c2a9c354989e.html" data-notion-page-id="3711a819-0217-80a0-ad86-c2a9c354989e" data-notion-space-id="b361a819-0217-814e-9751-00031293d165">When AI hallucinates what it sees: notes from a robotics sim</a> </p><p id="36d1a819-0217-80bd-a133-e57818a4aa25" class="" dir="auto"><a href="../Less%20Clueless%2036d1a81902178097bb6bd221174a6b16.html" data-notion-page-id="36d1a819-0217-8097-bb6b-d221174a6b16" data-notion-space-id="b361a819-0217-814e-9751-00031293d165">Less Clueless</a> </p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,772 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>How to ship a “hobbyist” robotics kit? </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure,
+aside,
+details {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="3871a819-0217-804a-a0e5-dece2766bfab" class="page sans"><header><h1 class="page-title" dir="auto">How to ship a “hobbyist” robotics kit? </h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="3881a819-0217-8008-a8b0-d6607aa48797" class="" dir="auto">I recently got myself an <a href="https://huggingface.co/docs/lerobot/so101">SO-101 arm by LeRobot</a> from the company <a href="https://thinkrobotics.com/">ThinkRobotics</a>. The original cost of all the parts is about $170 (or INR 16000) but the kit from Think Robotics costs $300 or INR 28000. I don’t have a 3D printer of my own so I paid the extra $130 for convenience hoping that the hobbyist kit supplier will make my life extra easy. While a few things were easier, i.e., I didn’t have to find a 3D printing vendor and the separate motors, I was let down by a few other things. I decided to document my experience alongside what I’ve learned from designing and shipping robotics kits in the past. </p><h2 id="214f8df7-4599-447b-8cdc-42a91edfa40c" class="" dir="auto">The package</h2><p id="3881a819-0217-803f-9013-d034a0e44e51" class="" dir="auto">I received two boxes from the ThinkRobotics team:</p><ul id="3871a819-0217-804e-a02a-d97b948ed5bf" class="bulleted-list" dir="auto"><li style="list-style-type:disc">One contained all the plastic pieces.</li></ul><ul id="3871a819-0217-8021-aa6c-d0f0adefd098" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The other contained all the electronics (the motors, the chargers).</li></ul><h2 id="2c274ae3-cf01-4426-af51-11eb28375e70" class="" dir="auto">Where all did the experience break down?</h2><p id="3881a819-0217-8071-b16f-f518a3a11b93" class="" dir="auto">When I was opening the boxes, I expected the parts to be labelled and an instruction manual to be present in the box. This wasn’t the case. And this led to my first gotcha moment. </p><h3 id="3881a819-0217-805f-bfa1-d9be3569b2ea" class="" dir="auto">Gotcha 1: The identical looking motors that go at different locations</h3><p id="3881a819-0217-802a-8db5-fc2331e95849" class="" dir="auto">The box had 12 motors. 6 for the leader arm and 6 for the follower arm. I looked at the motors and they were as follows.  </p><table id="a0064c67-2572-4f80-97b6-0f65acd751bc" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="95a709cb-012d-414a-93cb-11ce9d5cce16" dir="ltr"><th id="dCNG" class="simple-table-header-color simple-table-header">Suffix</th><th id="ZkB[" class="simple-table-header-color simple-table-header">Count</th></tr></thead><tbody><tr id="0e806ef2-377e-4be4-965a-723632078d1d" dir="ltr"><td id="dCNG" class="">STS3215-C018</td><td id="ZkB[" class="">6</td></tr><tr id="67d6ff5f-6913-46c9-90a3-de6e3a5e4032" dir="ltr"><td id="dCNG" class="">STS3215-C001</td><td id="ZkB[" class="">1</td></tr><tr id="2ab0ab09-2c36-4865-8264-bea463a4f2a7" dir="ltr"><td id="dCNG" class="">STS3215-C044</td><td id="ZkB[" class="">2</td></tr><tr id="e4f99dfa-5c2a-4c59-a036-c3f998246cc8" dir="ltr"><td id="dCNG" class="">STS3215-C046</td><td id="ZkB[" class="">3</td></tr></tbody></table><p id="3881a819-0217-8011-93d8-f2a429fce586" class="" dir="auto">I had no idea where any of these motors go. I had to figure out what the voltage was on each motor, what the gear ratio was, and especially where each motor was supposed to go. This is the table I had to make for myself.  </p><table id="3881a819-0217-8010-a5ae-c6a5644b662c" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="3881a819-0217-8067-81c8-e458183489bf" dir="ltr"><th id="dCNG" class="simple-table-header-color simple-table-header">Suffix</th><th id="ZkB[" class="simple-table-header-color simple-table-header">Count</th><th id="OccU" class="simple-table-header-color simple-table-header">Voltage</th><th id="QRR_" class="simple-table-header-color simple-table-header">Gear ratio</th><th id="ftqX" class="simple-table-header-color simple-table-header">Stall torque</th><th id="oHrD" class="simple-table-header-color simple-table-header">Used in</th></tr></thead><tbody><tr id="3881a819-0217-80c5-9b46-e4fd7fe68cb3" dir="ltr"><td id="dCNG" class="">STS3215-C018</td><td id="ZkB[" class="">6</td><td id="OccU" class="">12V</td><td id="QRR_" class="">1/345</td><td id="ftqX" class="">30 kg·cm</td><td id="oHrD" class="">Gripper (all 6 joints)</td></tr><tr id="3881a819-0217-80c3-9e2f-da2251af89e7" dir="ltr"><td id="dCNG" class="">STS3215-C001</td><td id="ZkB[" class="">1</td><td id="OccU" class="">7.4V</td><td id="QRR_" class="">1/345</td><td id="ftqX" class="">19.5 kg·cm</td><td id="oHrD" class="">Teacher J2 (shoulder_lift)</td></tr><tr id="3881a819-0217-8004-be01-eac2c7573c0d" dir="ltr"><td id="dCNG" class="">STS3215-C044</td><td id="ZkB[" class="">2</td><td id="OccU" class="">7.4V</td><td id="QRR_" class="">1/191</td><td id="ftqX" class="">27.4 kg·cm</td><td id="oHrD" class="">Teacher J1 (shoulder_pan), J3 (elbow_flex)</td></tr><tr id="3881a819-0217-802a-a118-fe2fb01c2db4" dir="ltr"><td id="dCNG" class="">STS3215-C046</td><td id="ZkB[" class="">3</td><td id="OccU" class="">7.4V</td><td id="QRR_" class="">1/147</td><td id="ftqX" class="">14.4 kg·cm</td><td id="oHrD" class="">Teacher J4 (wrist_flex), J5 (wrist_roll), J6 (gripper)</td></tr></tbody></table><h3 id="3881a819-0217-8041-acb9-eb73de674ccb" class="" dir="auto">Gotcha 2: The gaps you’re supposed to slot things in… are too small</h3><p id="3881a819-0217-80f1-88d7-f70e07e7655a" class="" dir="auto">When I tried to insert the first motor into the base of the follower arm, it got stuck halfway. Neither will it go in nor will it come out by reasonable means. It was stuck in this position: <br/></p><figure id="3881a819-0217-8090-b8aa-d37565719cb7" class="image" data-notion-image="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/45f071af-ee23-4741-8edd-174f35049bc6.png" dir="ltr"><a href="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/45f071af-ee23-4741-8edd-174f35049bc6.png"><img style="width:528.7943262411347px" src="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/45f071af-ee23-4741-8edd-174f35049bc6.png"/></a></figure><p id="3881a819-0217-80d9-8ed3-c46a43aed952" class="" dir="auto">This was because there was extra material protruding from the parts that were acting like a lock. </p><p id="3881a819-0217-8010-964d-dd5a740d1662" class="" dir="auto">I have long-term experience with 3D printed parts and how to handle these jams so I was simply able to pry the motor out of the gripper using tissue paper, an Allen key and my full weight. But I doubt that a student will try that too quickly on a $400 dollar kit especially knowing that it could break the kit before it’s ever assembled. </p><p id="3881a819-0217-804e-a443-e918d273550b" class="" dir="auto">In order to make the base usable, I had to shave off ~1 mm of plastic from several corners using flathead screwdrivers. Again, a thing that a student will not be too comfortable doing.</p><p id="3881a819-0217-8033-8ab1-de3bb41afb5a" class="" dir="auto">I had to then do the shaving off of plastics from parts for 9 out of 12 motors. For the motor that goes into the wrist joint, the shaving needed was more than 2mm and I ended up cracking the part anyway.  </p><div id="3881a819-0217-80d4-a7c6-cec05a7fcbcb" class="column-list" data-notion-column-list="" dir="auto"><div id="3881a819-0217-8050-b442-ec40e7c9a8bd" style="width:50%" class="column" data-notion-column-ratio="0.5" dir="auto"><figure id="3881a819-0217-80ad-8e7e-c4c4223ed5b4" class="image" data-notion-image="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/BrokenRobotWrist1.jpg" dir="ltr"><a href="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/BrokenRobotWrist1.jpg"><img style="width:704px" src="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/BrokenRobotWrist1.jpg"/></a></figure></div><div id="3881a819-0217-80ef-941a-c68322c0a907" style="width:50%" class="column" data-notion-column-ratio="0.5" dir="auto"><figure id="3881a819-0217-802f-8f1b-d555d9cfdc18" class="image" data-notion-image="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/BrokenRobotWrist2.jpg" dir="ltr"><a href="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/BrokenRobotWrist2.jpg"><img style="width:1080px" src="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/BrokenRobotWrist2.jpg"/></a></figure></div></div><h3 id="3881a819-0217-80a2-8023-c7ac506a4044" class="" dir="auto">Gotcha 3: The screws won’t go in</h3><p id="3881a819-0217-80b6-962e-fe9b3c8ab790" class="" dir="auto">For almost every part, the holes of the screws were a little too tight. Granted that sometimes, 3D printed parts are made such that when you put in a screw, it forces and cuts threads for itself making the grip stronger. But in this case, there were times when even the head of the screw will not go into the large hole where it’s supposed to go. I had to use Phillips screwdrivers to widen these holes and shove my screws. This was definitely less than elegant. </p><p id="3881a819-0217-80f8-854c-df32a9b6a12d" class="" dir="auto">
+</p><h3 id="3881a819-0217-80fe-95ff-f13729c4b4d8" class="" dir="auto"><strong>Gotcha 4: Some parts were not flush</strong></h3><p id="3881a819-0217-8043-84bb-e0f8a65b3787" class="" dir="auto">For the gripper’s fingers, the palm piece is supposed to sit on the wrist motor. The part needs to be flush. But… there was no plastic removed from the part to make it flush with the wheel of the motor. This meant that the screws were not reaching the wheel on the motor. And hence the part could not be attached. This removal of plastic from holes was extra difficult because I was trying to make the plastic piece thinner. And the holes are already at a place where too much pressure can crack the piece. But it was done and the follower arm was ready. </p><p id="3881a819-0217-80d6-8f10-fd962a8ed319" class="" dir="auto">The next day, I did all the shaving of plastics before starting the assembly, reducing my assembly time for the leader arm. And we got both arms ready. </p><p id="3881a819-0217-805d-8dc8-d47d6a03197e" class="" dir="auto">
+</p><figure id="3881a819-0217-8027-bc1d-d56a770dc5db" dir="ltr"><div class="source"><a href="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/WhatsApp_Video_2026-06-23_at_15.36.43.mp4">attachment:7d9f9870-8206-4ae5-a874-0792adadd018:WhatsApp_Video_2026-06-23_at_15.36.43.mp4</a></div></figure><p id="3881a819-0217-8042-ba7e-e22851d32f27" class="" dir="auto">
+</p><p id="3881a819-0217-802d-977b-c4bfd7798dfe" class="" dir="auto">
+</p><h2 id="3881a819-0217-8088-9536-c28efa247d34" class="" dir="auto">My learnings from building <a href="https://softroboticstoolkit.com/">Soft Robotics Toolkit</a></h2><p id="3881a819-0217-8051-8fbb-ca6f44699d46" class="" dir="auto">I designed and developed a soft robotics toolkit during my time at Harvard Biodesign Lab. This was a completely self-contained product that students and educators with no prior experience of DIY toolkits could use to make Soft Robotic Grippers. In order to make this friendly for students of all ages, we worked with over 200 students who tested the kits with and without our supervision.</p><figure id="3881a819-0217-80a5-8617-e62d1b2c88c8" class="image" data-notion-image="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/image.png" dir="ltr"><a href="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/image.png"><img style="width:2500px" src="How%20to%20ship%20a%20%E2%80%9Chobbyist%E2%80%9D%20robotics%20kit/image.png"/></a></figure><p id="3881a819-0217-8034-804a-c48547bc1887" class="" dir="auto">I learned a few things about the user experience of DIY toolkits: </p><ol type="1" id="3881a819-0217-80f5-b635-fdf63c82f728" class="numbered-list" start="1" dir="auto"><li>Make the parts fit smoothly: All parts should almost flow into each other. Even if you need a snug fit, add screws for the users to make it fit. It is better to err on the side of loose fit than a too tight fit. The too tight fit will stop users from assembling the kit in the first place.  </li></ol><ol type="1" id="3881a819-0217-80a4-ac7a-e06189bb368d" class="numbered-list" start="2" dir="auto"><li>Add 20% margin on screw holes for 3D printing: Most 3D printers are notoriously bad with hollow circles. This leads to holes almost always being smaller than the expected diameter in the design files. So, if you need holes, especially small holes like M2, M3 then add at least 20% extra diameter. Otherwise, students will often get stuck rotating a screw that is going nowhere because they are not going to push the screws in too hard. </li></ol><ol type="1" id="3881a819-0217-80b4-85f2-fdeba008e032" class="numbered-list" start="3" dir="auto"><li>Label the parts: For 3D printed parts, it’s extremely easy to add the part name on the part itself. This adds zero cost and makes the whole process extremely easy for the user. If not that, then paste labels on the parts. And even if that is difficult or cost intensive, add a sheet of paper with photos of every part. And some indicators about how to distinguish between similar looking parts. </li></ol><ol type="1" id="3881a819-0217-8098-b911-e63551a50a19" class="numbered-list" start="4" dir="auto"><li>Give an instruction manual: Having an instruction manual as part of the kit takes away the intimidating feeling from the toolkit. Best is to add a printed instruction manual. If not, then at least give a printed card with QR codes and links to the right set of instructions for a user to be able to familiarize themselves with the kit.  </li></ol><h2 id="3881a819-0217-8036-a40e-e19a47e7c1d4" class="" dir="auto">What ThinkRobotics could fix</h2><p id="3881a819-0217-80a7-bb6b-e8acd9d199bc" class="" dir="auto">The learnings above apply to ThinkRobotics with one caveat: they’re not the kit’s designer, just the printer and shipper. That gives them more leverage on QA — they control the print loop. Three concrete things would change the buyer experience:</p><ul id="3881a819-0217-80f0-9ec3-ef9ecde64081" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Calibrate the printer to the design:</strong> Print test geometries (holes, slots, columns), measure deviation, adjust source files until parts fit on first try. One-time cost per printer.</li></ul><ul id="3881a819-0217-80fa-b9cb-c82d19aa958a" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Add 5–20% margin on small holes (M2, M3) by default:</strong> The screw is the lock, not the plastic.</li></ul><ul id="3881a819-0217-8020-8b46-de12618e2253" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Ship one printed page with the kit:</strong> A postcard with a QR code, a parts photo, and a one-line warning about ID assignment before assembly would prevent most of the gotchas above.<br/>A fourth, optional but high-value: record your own assembly video. It doubles as marketing and customer support.</li></ul><h2 id="3881a819-0217-804f-9e1a-c18410a51db8" class="" dir="auto">What buyers should prepare for</h2><p id="3881a819-0217-80df-91af-d44d0794a846" class="" dir="auto">If you’re ordering any robotics kit without prior 3D-printing or hardware experience:</p><ul id="3881a819-0217-803d-9a75-cc61965704e5" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Budget extra time:</strong> Plan for at least one frustrating session of shaving and prying.</li></ul><ul id="3881a819-0217-80e0-82ff-c4a294251f38" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Have basic tools on hand:</strong> Flathead screwdriver, Allen key set, Phillips screwdriver. If you’ve never used these in a real workshop, an afternoon at a makerspace or woodworking class is worth more than another tutorial video.</li></ul><ul id="3881a819-0217-80f5-8bcb-e92da2486a6e" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Assume some parts will crack:</strong> Three of mine did. You’ll still finish.</li></ul><h2 id="3881a819-0217-806a-98b2-de7a01debcda" class="" dir="auto">Zooming out</h2><p id="3881a819-0217-802b-a9e3-ea8c979d29f1" class="" dir="auto">Open-source robotics is at the stage where the components exist but the experience around them doesn’t. The motors work, the design files compile, the policies are downloadable — but the connective tissue (QA, labelling, instructions, fit-and-finish) is missing across the stack. Someone has to finish that work. Until they do, the field stays gated to people who already know what they’re doing.</p><p id="3881a819-0217-80f8-90a7-faba94dffe98" class="" dir="auto">Anyway, the good news is that my arms are assembled. Next, ACT (<a href="https://huggingface.co/docs/lerobot/act">Action Chunking with Transformers</a>) and <a href="https://huggingface.co/docs/lerobot/smolvla">SmolVLA</a>.</p><h2 id="3881a819-0217-8000-bcd4-fc5a12e5e15c" class="" dir="auto">Appendix</h2><p id="3881a819-0217-806d-91ad-ef6fe0b0f782" class="" dir="auto">For those wanting to assemble the arms themselves: </p><ol type="1" id="3881a819-0217-8099-9cf7-fed3412d9b89" class="numbered-list" start="1" dir="auto"><li>HuggingFace assembly instructions: <a href="https://huggingface.co/docs/lerobot/so101">https://huggingface.co/docs/lerobot/so101</a> </li></ol><ol type="1" id="3881a819-0217-8094-8c77-cf8517c3c668" class="numbered-list" start="2" dir="auto"><li>Remember to assign motor IDs before starting the assembly of the bots</li></ol><ol type="1" id="3881a819-0217-80ce-b051-cdea5c2038ad" class="numbered-list" start="3" dir="auto"><li>Motors list and ID list for Follower and Leader arms</li></ol><p id="3881a819-0217-80a8-9511-ef1b99713270" class="" dir="auto">
+</p><h3 id="2bb70e06-8a57-4384-a690-51dee51eeaca" class="" dir="auto">Follower — uniform, all C018, 12V supply</h3><table id="3e88cbfb-7067-45ef-a29c-07bbf02433cf" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="1bab10aa-78df-48c0-a056-12e7cf5b5c2f" dir="ltr"><th id="}HZT" class="simple-table-header-color simple-table-header">Joint</th><th id="Gg~g" class="simple-table-header-color simple-table-header">ID</th><th id="S[=r" class="simple-table-header-color simple-table-header">Label</th><th id="E\yH" class="simple-table-header-color simple-table-header">Motor</th></tr></thead><tbody><tr id="0cc35f0d-0755-4111-b480-252afb292ad9" dir="ltr"><td id="}HZT" class="">shoulder_pan</td><td id="Gg~g" class="">1</td><td id="S[=r" class="">F1</td><td id="E\yH" class="">C018</td></tr><tr id="9f181f0b-8d99-4826-a4cd-7d7246659eb8" dir="ltr"><td id="}HZT" class="">shoulder_lift</td><td id="Gg~g" class="">2</td><td id="S[=r" class="">F2</td><td id="E\yH" class="">C018</td></tr><tr id="ff326173-5cbf-4b67-aea5-8fc75cce4cc8" dir="ltr"><td id="}HZT" class="">elbow_flex</td><td id="Gg~g" class="">3</td><td id="S[=r" class="">F3</td><td id="E\yH" class="">C018</td></tr><tr id="bea603c7-53aa-49a1-ab21-6fbfe4dd4949" dir="ltr"><td id="}HZT" class="">wrist_flex</td><td id="Gg~g" class="">4</td><td id="S[=r" class="">F4</td><td id="E\yH" class="">C018</td></tr><tr id="966d0e28-c216-4b85-9303-8d4e0b492b4a" dir="ltr"><td id="}HZT" class="">wrist_roll</td><td id="Gg~g" class="">5</td><td id="S[=r" class="">F5</td><td id="E\yH" class="">C018</td></tr><tr id="cb4f5917-edc6-443b-b8bd-42024ef3f0f5" dir="ltr"><td id="}HZT" class="">gripper</td><td id="Gg~g" class="">6</td><td id="S[=r" class="">F6</td><td id="E\yH" class="">C018</td></tr></tbody></table><h3 id="bb028077-e1ed-4483-939b-05de0801fc92" class="" dir="auto">Leader — mixed variants, 7.4V supply</h3><table id="0afd7247-f295-40d2-87e2-5acd449b5ad0" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="a6692dd6-2975-491a-8d70-f12c5d87bed1" dir="ltr"><th id="IicR" class="simple-table-header-color simple-table-header">Joint</th><th id="?mB~" class="simple-table-header-color simple-table-header">ID</th><th id="_\c{" class="simple-table-header-color simple-table-header">Label</th><th id="GcU&gt;" class="simple-table-header-color simple-table-header">Motor</th><th id="bEX@" class="simple-table-header-color simple-table-header">Gear ratio</th></tr></thead><tbody><tr id="91c2377c-a5b5-4dfa-b950-08c20c7ee663" dir="ltr"><td id="IicR" class="">shoulder_pan</td><td id="?mB~" class="">1</td><td id="_\c{" class="">L1</td><td id="GcU&gt;" class="">C044</td><td id="bEX@" class="">1/191</td></tr><tr id="f7462440-44a2-470d-b3f4-7a5abed0a21c" dir="ltr"><td id="IicR" class="">shoulder_lift</td><td id="?mB~" class="">2</td><td id="_\c{" class="">L2</td><td id="GcU&gt;" class="">C001</td><td id="bEX@" class="">1/345</td></tr><tr id="c23259c6-0e37-4224-85bc-1c2c6482edce" dir="ltr"><td id="IicR" class="">elbow_flex</td><td id="?mB~" class="">3</td><td id="_\c{" class="">L3</td><td id="GcU&gt;" class="">C044</td><td id="bEX@" class="">1/191</td></tr><tr id="bbf290e1-e01e-4d15-b092-f152d1098714" dir="ltr"><td id="IicR" class="">wrist_flex</td><td id="?mB~" class="">4</td><td id="_\c{" class="">L4</td><td id="GcU&gt;" class="">C046</td><td id="bEX@" class="">1/147</td></tr><tr id="21679274-40b9-40a2-9958-f45b82b5dcff" dir="ltr"><td id="IicR" class="">wrist_roll</td><td id="?mB~" class="">5</td><td id="_\c{" class="">L5</td><td id="GcU&gt;" class="">C046</td><td id="bEX@" class="">1/147</td></tr><tr id="f206b3e0-3712-4b34-be9b-1bd1ecafd5af" dir="ltr"><td id="IicR" class="">gripper</td><td id="?mB~" class="">6</td><td id="_\c{" class="">L6</td><td id="GcU&gt;" class="">C046</td><td id="bEX@" class="">1/147</td></tr></tbody></table><hr id="87631fa2-a8fe-4825-b917-80fba983a80a" dir="auto"/><p id="f7f18fd3-ed6c-4e1a-8b97-da17b3e08cd2" class="" dir="auto">— Ankur Goel</p><p id="83a7b8ff-999c-46cf-a7e6-2873a4f899e0" class="" dir="auto"><em>I am brewing a few experiments. I might do some interesting things soon. You can reach me at:</em></p><ul id="d0fb15e9-e913-4bc1-afb7-9a8fb86b4c27" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="mailto:ankur@chaotix.ai">ankur@chaotix.ai</a></li></ul><ul id="2f52bc3e-a33c-48e5-b0b2-320348990766" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://x.com/goelankur1996">https://x.com/goelankur1996</a></li></ul><ul id="ce29777d-dee8-4346-9d74-241f199d5a0f" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://www.linkedin.com/in/goelankur1996/">https://www.linkedin.com/in/goelankur1996/</a></li></ul><ul id="38f36b3b-1cf4-46be-a4b0-93673a559dd9" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://lessclueless.substack.com/">https://lessclueless.substack.com/</a></li></ul><p id="8637bda7-c56e-4b57-89d3-063d94f3e47f" class="" dir="auto">You can check out other blogs I wrote at:</p><p id="eaf5b268-1817-4dc0-9525-9060d618fe5d" class="" dir="auto"><a href="Pi0%207%20utilizing%20bad%20data%20to%20teach%20good%20things%2037c1a819021780f9a6dbc1e0fe8c638a.html" data-notion-page-id="37c1a819-0217-80f9-a6db-c1e0fe8c638a" data-notion-space-id="b361a819-0217-814e-9751-00031293d165">Pi0.7: utilizing bad data to teach good things</a></p><p id="dbac79e4-7e8d-4acd-832a-466b08756d5f" class="" dir="auto"><a href="When%20AI%20hallucinates%20what%20it%20sees%20notes%20from%20a%20rob%203711a819021780a0ad86c2a9c354989e.html" data-notion-page-id="3711a819-0217-80a0-ad86-c2a9c354989e" data-notion-space-id="b361a819-0217-814e-9751-00031293d165">When AI hallucinates what it sees: notes from a robotics sim</a></p><p id="36377b88-c31a-4a1d-b1fb-bcd3fd358a5d" class="" dir="auto"><a href="Building%20a%20personal%20automation%20system%20on%20the%20grave%2036c1a819021780f4b751edc7a6c9e60d.html" data-notion-page-id="36c1a819-0217-80f4-b751-edc7a6c9e60d" data-notion-space-id="b361a819-0217-814e-9751-00031293d165">Building a personal automation system on the graveyard of past attempts</a></p><p id="9da7df4e-689b-49a3-8838-5ddf34922554" class="" dir="auto"><a href="Design,%20Launches%20and%20Doing%20it%20right%2036d1a81902178167b9bddf0991ad18bc.html" data-notion-page-id="36d1a819-0217-8167-b9bd-df0991ad18bc" data-notion-space-id="b361a819-0217-814e-9751-00031293d165">Design, Launches and Doing it right</a></p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
