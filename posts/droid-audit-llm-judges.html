@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auditing a dataset with three LLM judges</title>
+<meta name="description" content="Three models judged the same 72,851 DROID annotations with one rubric. The defect rate swung 2.9× — why a single-judge number measures the judge, not the data.">
+<link rel="canonical" href="https://lessclueless.me/posts/droid-audit-llm-judges.html">
+<meta property="og:title" content="Auditing a dataset with three LLM judges">
+<meta property="og:description" content="Three models judged the same 72,851 DROID annotations with one rubric. The defect rate swung 2.9× — why a single-judge number measures the judge, not the data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lessclueless.me/posts/droid-audit-llm-judges.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="/">Less Clueless</a>
+  <nav class="nav">
+    <a href="/">Writing</a>
+    <a href="https://lessclueless.substack.com/">Substack</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <article class="article">
+    <div class="article-header">
+      <h1>Auditing a dataset with three LLM judges</h1>
+      <div class="post-meta"><span>July 27, 2026</span><span class="tag">ai</span><span class="tag">ml</span></div>
+    </div>
+    <div class="post-body">
+<p dir="auto"><em>I ran the same annotation audit three times with three large language models. The defect rate moved by 2.9×. Here is why a single-judge number is not a measurement.</em></p>
+
+<p dir="auto">DROID annotation audit · 72,851 episodes · 3 judges. Replication code and data are on <a href="https://github.com/goelankur1996/droid-audit-full">GitHub</a> — every figure below is reproduced by <code>analyze.py</code> from the released judge outputs.</p>
+
+<p dir="auto">There is a tempting move in dataset quality work: point a capable language model at your data, give it a careful rubric, and report back “X% of this dataset is defective.” The number looks authoritative. It came from a frontier model reading every example. I ran an experiment, and the only conclusive thing I found is that a defect rate, taken from any single judge, tells you at least as much about the judge as about the data.</p>
+
+<h2 dir="auto">Setup</h2>
+
+<p dir="auto"><a href="https://droid-dataset.github.io/">DROID</a> is a large robot-manipulation dataset where each episode is labelled by three people with a short natural-language instruction. Those three descriptions are supposed to describe the same video. Often they don’t. One says “push the cup left,” another “push it right”; one says “pick up the marker,” another “pick up the marker and put it in the cup.” I built an LLM-as-judge pipeline to flag two failure modes: <strong>direction conflicts</strong> (incompatible spatial claims) and <strong>truncation</strong> (one annotation describing only part of what another describes). One rubric, one schema, ~73,000 episodes judged by every model.</p>
+
+<p dir="auto">I ran the whole thing three times with GLM, DeepSeek, and Mistral, and compared the data. I have a few observations.</p>
+
+<h2 dir="auto">1. The rate reported is a property of the judge LLM</h2>
+
+<p dir="auto">Had I run only one model and reported its conflict rate, here’s the number I’d have published — depending entirely on which model I happened to choose:</p>
+
+<figure><img src="/assets/img/droid-audit-llm-judges/fig1_flag_rate.png" alt="Defect flag rate by judge: direction conflicts range from 10.4% (GLM) to 30.2% (DeepSeek)"><figcaption>Fig 1 — the same rubric on the same episodes, three different answers.</figcaption></figure>
+
+<p dir="auto">A 2.9× swing is not a rounding difference. If you’re deciding whether a dataset is clean enough to train on, or which labs’ data to trust, the model you reached for first sets the answer. That should bother you.</p>
+
+<h2 dir="auto">2. The honest objection: is this just noise?</h2>
+
+<p dir="auto">The obvious rebuttal is that the models are simply unreliable or guessing, and three guessers naturally disagree. If that were true, none of this would be interesting. So I tested it: I shuffled each model’s verdicts while keeping its overall rates fixed, simulating three judges with the same biases but no shared signal, and measured how much agreement survives.</p>
+
+<figure><img src="/assets/img/droid-audit-llm-judges/fig2_random_baseline.png" alt="Observed three-way agreement compared against a shuffled random baseline"><figcaption>Fig 2 — observed agreement sits well above the shuffled baseline.</figcaption></figure>
+
+<p dir="auto">The models agree far more than chance. Cohen’s κ says the same without the theatrics: every pair lands between 0.40 and 0.49, which is chance-corrected “moderate.” There is a real signal here. Which makes the next finding the uncomfortable one.</p>
+
+<h2 dir="auto">3. The agreement is real — and it’s hiding where it’s cheap</h2>
+
+<p dir="auto">The comfortable “45% unanimous” number is dominated by the easy calls. Nearly 60% of all three-way agreement is the models jointly deciding an episode has <em>no direction language at all</em> — agreeing there’s nothing to judge. Strip those out, then narrow to the episodes where at least one model actually cried foul, and the agreement collapses:</p>
+
+<figure><img src="/assets/img/droid-audit-llm-judges/fig3_agreement_decay.png" alt="Three-way agreement decaying as trivially clean episodes are removed"><figcaption>Fig 3 — agreement decays sharply once the easy calls are excluded.</figcaption></figure>
+
+<p dir="auto">Noise averages out; add more judges and random errors cancel. This doesn’t, because it isn’t random: it’s three <em>systematically</em> different thresholds for what counts as a defect. Adding a fourth model of the same class won’t converge them; it’ll add a fourth threshold. On the episodes that matter, roughly three out of four have a dissenter.</p>
+
+<blockquote><p dir="auto"><strong>The single sharpest disagreement —</strong> 8,204 episodes are ones GLM calls perfectly <em>clean</em> and DeepSeek calls a <em>conflict</em>. It’s a flat contradiction on whether a defect exists at all. One model’s pass is the other’s failure.</p></blockquote>
+
+<h2 dir="auto">4. What actually survives consensus</h2>
+
+<p dir="auto">If you’re going to act on an audit, the only defensible unit is the set of flags that survive all three judges agreeing. Here’s how far the defect pile shrinks when you demand consensus:</p>
+
+<figure><img src="/assets/img/droid-audit-llm-judges/fig4_consensus_funnel.png" alt="Consensus funnel: flag counts shrinking as the agreement bar rises from one judge to all three"><figcaption>Fig 4 — the consensus funnel for both defect types.</figcaption></figure>
+
+<table>
+<thead><tr><th>Consensus bar</th><th>Conflict</th><th>Truncated</th></tr></thead>
+<tbody>
+<tr><td>≥1 judge flags</td><td>27,175 (37.3%)</td><td>34,283 (47.1%)</td></tr>
+<tr><td>≥2 judges agree</td><td>15,044 (20.6%)</td><td>21,738 (29.8%)</td></tr>
+<tr><td>All 3 agree</td><td>6,051 (8.3%)</td><td>12,648 (17.4%)</td></tr>
+<tr><td><strong>consensus ÷ any-flag</strong></td><td><strong>22%</strong></td><td><strong>37%</strong></td></tr>
+</tbody>
+</table>
+
+<p dir="auto">Truncation holds together noticeably better than conflict — the judges share more of a definition there. But for both axes the lesson is the same: the consensus threshold is a dial, and wherever you set it becomes your headline number. There is no single true rate falling out of this.</p>
+
+<h2 dir="auto">5. Conclusion</h2>
+
+<p dir="auto">I am deliberately not claiming DROID’s “real” defect rate. Everything above measures whether the judges <em>agree</em>, not whether any of them is <em>right</em>. Those are different questions, and without a hand-labelled gold set I can only answer the first. High agreement over chance proves the models are reacting to something real in the text. It does not prove they’re reacting to the right thing. Three models sharing a blind spot would produce numbers that look exactly this clean.</p>
+
+<p dir="auto">So this is a negative result: <strong>a defect rate from a single LLM judge is not a measurement of your dataset — it’s a measurement of that judge applied to your dataset.</strong> The two only coincide if you’ve checked, and checking needs ground truth.</p>
+
+<blockquote><p dir="auto"><strong>If you’re auditing a dataset this way:</strong> Report a range, not a point — run at least two judges and quote the consensus band. Treat truncation-style agreement as firmer than conflict-style. And before you trust any of it as an accuracy claim rather than an agreement claim, label a few hundred episodes by hand. That small gold set is what turns “these judges disagree” into “this judge is wrong.”</p></blockquote>
+
+<hr>
+
+<h3 dir="auto">Method</h3>
+
+<p dir="auto">Three models — GLM, DeepSeek V3.2, and Mistral Large 3 — judged the full DROID annotation set through an identical <code>rubric.py</code> and JSON schema, scoring each episode on direction (conflict / ambiguous / clean / not-applicable) and truncation (truncated / abstraction / clean) with a self-reported confidence. All statistics are computed on the 72,851 episodes common to all three runs (union 74,789; raw counts differ by a handful of dropped or malformed responses per model). Agreement is Cohen’s κ, chance-corrected. The random baseline shuffles each model’s verdict vector independently, preserving its marginal rates, averaged over 20 draws. No ground-truth labels were used — by design, to keep the focus on reproducibility, not correctness.</p>
+
+<p dir="auto"><strong>Pairwise Cohen’s κ</strong></p>
+
+<table>
+<thead><tr><th>Pair</th><th>Direction</th><th>Truncation</th></tr></thead>
+<tbody>
+<tr><td>DeepSeek · GLM</td><td>0.423</td><td>0.455</td></tr>
+<tr><td>DeepSeek · Mistral</td><td>0.489</td><td>0.420</td></tr>
+<tr><td>GLM · Mistral</td><td>0.400</td><td>0.414</td></tr>
+</tbody>
+</table>
+
+<p dir="auto">Full result files and the pipeline are on <a href="https://github.com/goelankur1996/droid-audit-full">GitHub</a>.</p>
+</div>
+    <a class="back-link" href="/">← All writing</a>
+  </article>
+</main>
+
+<footer class="site-footer"><div class="wrap">
+  <div>— Ankur Goel</div>
+  <p><em>I am brewing a few experiments. I might do some interesting things soon.</em></p>
+  <ul class="socials"><li><a href="mailto:ankur@chaotix.ai">Email</a></li><li><a href="https://x.com/goelankur1996">X</a></li><li><a href="https://www.linkedin.com/in/goelankur1996/">LinkedIn</a></li><li><a href="https://lessclueless.substack.com/">Substack</a></li></ul>
+</div></footer>
+</body>
+</html>

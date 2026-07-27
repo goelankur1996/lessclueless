@@ -16,6 +16,14 @@
   },
   "posts": [
     {
+      "slug": "droid-audit-llm-judges",
+      "title": "Auditing a dataset with three LLM judges",
+      "description": "Three models judged the same 72,851 DROID annotations with one rubric. The defect rate swung 2.9× — why a single-judge number measures the judge, not the data.",
+      "date": "2026-07-27",
+      "tags": ["ai", "ml"],
+      "source": "Auditing a dataset with three LLM judges 3891a819021780b2a7c4d1e0fa5b7c34.html"
+    },
+    {
       "slug": "shipping-hobbyist-robotics-kit",
       "title": "How to ship a \u201chobbyist\u201d robotics kit?",
       "description": "Four gotchas from assembling an SO-101 kit, and what shipping good open-source hardware actually requires from vendors and buyers.",
